@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+result/
+file-index.json
+output.json
+mask_align_trn.json
+mask_align_tst.json
+mask_anno_trn.json
+mask_anno_tst.json
+json/
+results/

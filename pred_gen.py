@@ -7,12 +7,12 @@ def get_file_index(filesProcessed):
         new_dict[f]={"framerate": 30.0, "selected": {"0": 1, "9000": 0}}
     return new_dict
 
-prop_path = "/mnt/hddb/Cache/june2020_mask373/exp/speed_tst_v1/props"
-out_path = "/mnt/ssdb/kevinq/adaptive_temporal_shift_module/exp/umd373_maskv1"
-label = "data/umd373_anno_v1.json"
+prop_path = "./json/test"
+out_path = "./"
+label = "./mask_anno_tst.json"
 
 def gen_pred(prop_path,out_path,label):
-    base = json.load(open(base,"r"))["database"]
+    base = json.load(open(label,"r"))["database"]
     with open("labels.txt","r") as f:
         tmps = f.readlines()
     labels = {}
@@ -69,3 +69,5 @@ def gen_pred(prop_path,out_path,label):
     json_str = json.dumps(file_dict,indent=4)
     with open(os.path.join(out_path,"file-index.json"), 'w') as save_json:
         save_json.write(json_str)
+
+gen_pred(prop_path,out_path,label)

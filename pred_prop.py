@@ -2,7 +2,20 @@ import csv
 import json
 import os
 
-def gen_prop(label,out_path):
+def make_blanket_output(labels,out_path,prop_path):
+    all_vids = os.listdir(prop_path)
+    out_vids = os.listdir(out_path)
+    print(len(all_vids))
+    for vid in all_vids:
+        if vid not in out_vids:
+            csv_name = os.path.join(out_path,vid)
+            with open(csv_name,"w") as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(labels)
+            csvfile.close()
+
+
+def gen_prop(label,out_path,prop_path):
     with open("labels.txt","r") as f:
         tmps = f.readlines()
     labels = []
@@ -17,7 +30,7 @@ def gen_prop(label,out_path):
     for anno in annos:
         vid = anno.split("_")[0]
         pid = anno.split("_")[-1]
-        conf = anno["annotations"]["conf"]
+        conf = base[anno]["annotations"]["conf"]
         if max(conf)>0:
             conf.insert(0,0)
         else:
@@ -37,7 +50,9 @@ def gen_prop(label,out_path):
             for pid,confs in vid_dict[vid].items():
                 confs.insert(0,pid)
                 writer.writerow(confs)
-        writer.release()
+        csvfile.close()
+    make_blanket_output(labels,out_path,prop_path)
+
 
 
 
