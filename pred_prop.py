@@ -37,7 +37,7 @@ def gen_prop(label,out_path,prop_path):
             conf.insert(0,1)
         if vid not in vid_dict.keys():
             vid_dict[vid] = {}
-        vid_dict[vid][pid] = conf
+        vid_dict[vid][int(pid)] = conf
     
     vids = list(vid_dict.keys())
     if not os.path.exists(out_path):
@@ -47,7 +47,9 @@ def gen_prop(label,out_path,prop_path):
         with open(csv_name,"w") as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(labels)
-            for pid,confs in vid_dict[vid].items():
+            pids = range(len(list(vid_dict[vid].keys())))
+            for pid in pids:
+                confs = vid_dict[vid][pid]
                 confs.insert(0,pid)
                 writer.writerow(confs)
         csvfile.close()
